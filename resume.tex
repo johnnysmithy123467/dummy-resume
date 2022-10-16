@@ -1,55 +1,12 @@
-// ==UserScript==
-// @name        Updated Resume From Overleaf
-// @namespace   Custom Violentmonkey Scripts
-// @match       https://www.overleaf.com/*
-// @grant       none
-// @version     1.0
-// @author      chubbyFreak
-// @description 10/16/2022, 2:11:51 AM
-// ==/UserScript==
-
-// const API_URL = 'https://maheshnat.herokuapp.com/api/update-resume';
-const API_URL = 'https://acc6-128-61-81-91.ngrok.io/api/update-resume';
-const SECRET =
-  'aJU1hjRdMtZQoZ02mpTjU6G38kyDV4XFU6bmWrOXbfjf+eWtgQm7EeKvcyiScAcyr2ygdW6NLRabVexKAgDZuGl8VUVkooAFVYxrV+CktmbQJ/nRw/Ygq9MoHDvWR1t2I3asj6hVaqFutuYEQmPLQM2pu38a7wh3HngDvc58vLt0uUVgvk1L4YbFcjpkiUYCaj/Yhp5ATvQ1fh7ui07db1wPgUnqFIXFQPKo7ltpKG1G5xpLe1v/ZflSIr5wk/TAswZYgdElPldjNbbsLIY3JOoPJ9vBOmMG39BuWTmowxqKtjQ8HJSVkUulYp5oREa4kPwGwYhpZZBkdZDexufSow==';
-
-const pushToGithub = async () => {
-  let res = await fetch(
-    document.querySelector('.fa-download').parentElement.href
-  );
-
-  const encodedText = btoa(unescape(encodeURIComponent(await res.text())));
-  const latex = btoa(
-    unescape(encodeURIComponent(await navigator.clipboard.readText()))
-  );
-
-  try {
-    res = await fetch(API_URL, {
-      method: 'PUT',
-      headers: {
-        secret: SECRET,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        blobContent: encodedText,
-        latexContent: latex,
-      }),
-    });
-    if (res.ok) alert('Successfully pushed to github.');
-    else alert(`Error pushing to github, "${(await res.json()).message}"`);
-  } catch (e) {
-    alert('Error pushing to github.');
-  }
-};
-
-let lastPressedKeyCode;
-
-const onKeyDown = (e) => {
-  // pressing i and last pressed ctrl
-  if (lastPressedKeyCode === 17 && e.keyCode === 73) {
-    if (confirm('Are you sure you want to push changes to github?'))
-      pushToGithub();
-  }
-  lastPressedKeyCode = e.keyCode;
-};
-document.addEventListener('keydown', onKeyDown, false);
+    const res = await [
+      axios.get(
+        'https://api.github.com/repos/chubbyFreak/dummy-resume/contents/resume.pdf',
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.GITHUB_API_ACCESS_TOKEN}`,
+            Accept: 'application/vnd.github+json',
+          },
+        }
+      ),
+    ];
+    const sha = res.data.sha;
