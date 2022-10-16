@@ -1,0 +1,12 @@
+    const res = await [
+      axios.get(
+        'https://api.github.com/repos/chubbyFreak/dummy-resume/contents/resume.pdf',
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.GITHUB_API_ACCESS_TOKEN}`,
+            Accept: 'application/vnd.github+json',
+          },
+        }
+      ),
+    ];
+    const sha = res.data.sha;
