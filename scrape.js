@@ -9,18 +9,17 @@
 // ==/UserScript==
 
 const API_URL = 'https://maheshnat.herokuapp.com/api/update-resume';
-const SECRET =
-  '+CiMojHIwIGk5jD6yPPAip0uAB1b8TH+18suSWCjWXD0XoyN2BNAFne2ezpPk23e/LOAPPBe2IYn2wpQEDwXQuT9gNQARq7NCq/fNjj/yCWr8SNPl/og4yj24q1Nop01V6qJoD8Io5MVDXXIE6kcyslj9rVKfHvtLbgkoz29rxNhfVoXyeKeqWPzv2Y6U36F4YNsR2rQZH/BxOJ1NInQcu+etzD6G/GuSh48Cw2uf4X6skT6pZE59GBKcA3Hew6g9nJJpk4PZAyrDWNRftBKU+ickJ8gd+YfU6N1pQqCV7sE9IQ5nMvOOaWepnjlLRsBfr0DrVxC3YS+8XkvlxEKIQ==';
-
+const SECRET = '';
 const pushToGithub = async () => {
   let res = await fetch(
     document.querySelector('.fa-download').parentElement.href
   );
 
-  const encodedText = btoa(unescape(encodeURIComponent(await res.text())));
-  const latex = btoa(
-    unescape(encodeURIComponent(await navigator.clipboard.readText()))
-  );
+  const encodedBlobText = btoa(unescape(encodeURIComponent(await res.text())));
+  const latexText = await navigator.clipboard.readText();
+  if (!latexText.startsWith('\\documentclass'))
+    return alert('Invalid Clipboard.');
+  const encodedLatexText = btoa(unescape(encodeURIComponent(latexText)));
 
   try {
     res = await fetch(API_URL, {
@@ -30,8 +29,8 @@ const pushToGithub = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        blobContent: encodedText,
-        latexContent: latex,
+        blobContent: encodedBlobText,
+        latexContent: encodedLatexText,
       }),
     });
     if (res.ok) alert('Successfully pushed to github.');
