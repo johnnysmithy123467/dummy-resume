@@ -20,6 +20,7 @@ const pushToGithub = async () => {
   if (!latexText.startsWith('\\documentclass'))
     return alert('Invalid Clipboard.');
   const encodedLatexText = btoa(unescape(encodeURIComponent(latexText)));
+  const commitMessage = prompt('Enter a commit message:');
 
   try {
     res = await fetch(API_URL, {
@@ -31,6 +32,7 @@ const pushToGithub = async () => {
       body: JSON.stringify({
         blobContent: encodedBlobText,
         latexContent: encodedLatexText,
+        commitMessage,
       }),
     });
     if (res.ok) alert('Successfully pushed to github.');
