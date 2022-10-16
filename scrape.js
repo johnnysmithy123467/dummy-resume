@@ -8,7 +8,7 @@
 // @description 10/16/2022, 2:11:51 AM
 // ==/UserScript==
 
-const API_URL = 'https://maheshnat.herokuapp.com/api/update-resume';
+const API_URL = 'https://maheshnat.herokuapp.com/';
 const SECRET = '';
 
 const appendBase64Script = async () => {
