@@ -10,12 +10,23 @@
 
 const API_URL = 'https://maheshnat.herokuapp.com/api/update-resume';
 const SECRET = '';
+
+const appendBase64Script = async () => {
+  let e = document.createElement('script');
+  e.innerText = await (
+    await fetch('https://cdn.jsdelivr.net/npm/js-base64@3.7.2/base64.min.js')
+  ).text();
+  document.head.appendChild(e);
+};
+
 const pushToGithub = async () => {
   let res = await fetch(
     document.querySelector('.fa-download').parentElement.href
   );
 
-  const encodedBlobText = btoa(unescape(encodeURIComponent(await res.text())));
+  let encodedBlobText = Base64.fromUint8Array(
+    new Uint8Array(await (await res.blob()).arrayBuffer())
+  );
   const latexText = await navigator.clipboard.readText();
   if (!latexText.startsWith('\\documentclass'))
     return alert('Invalid Clipboard.');
@@ -23,7 +34,7 @@ const pushToGithub = async () => {
   const commitMessage = prompt('Enter a commit message:');
 
   try {
-    res = await fetch(API_URL, {
+    res = await fetch(`${API_URL}/api/update-resume`, {
       method: 'PUT',
       headers: {
         secret: SECRET,
@@ -45,11 +56,13 @@ const pushToGithub = async () => {
 let lastPressedKeyCode;
 
 const onKeyDown = (e) => {
-  // pressing i and last pressed ctrl
-  if (lastPressedKeyCode === 17 && e.keyCode === 73) {
+  // pressing m and last pressed ctrl
+  if (lastPressedKeyCode === 17 && e.keyCode === 77) {
     if (confirm('Are you sure you want to push changes to github?'))
       pushToGithub();
   }
   lastPressedKeyCode = e.keyCode;
 };
+
 document.addEventListener('keydown', onKeyDown, false);
+appendBase64Script();
