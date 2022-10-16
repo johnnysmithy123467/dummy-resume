@@ -1,12 +1,158 @@
-    const res = await [
-      axios.get(
-        'https://api.github.com/repos/chubbyFreak/dummy-resume/contents/resume.pdf',
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.GITHUB_API_ACCESS_TOKEN}`,
-            Accept: 'application/vnd.github+json',
-          },
-        }
-      ),
-    ];
-    const sha = res.data.sha;
+\documentclass[a4paper]{article}
+    \usepackage{fullpage}
+    \usepackage{amsmath}
+    \usepackage{amssymb}\textit{}
+    \usepackage{textcomp}
+    \usepackage[utf8]{inputenc}
+    \usepackage[T1]{fontenc}
+    \usepackage{hyperref}
+    \textheight=10in
+    \pagestyle{empty}\textit{\textit{}}
+    \raggedright
+    \usepackage[left=0.8in,right=0.8in,bottom=0.8in,top=0.8in]{geometry}\textit{\textit{}}
+
+    %\renewcommand{\encodingdefault}{cg}
+%\renewcommand{\rmdefault}{lgrcmr}
+
+\def\bull{\vrule height 0.8ex width .7ex depth -.1ex }
+
+% DEFINITIONS FOR RESUME %%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\area} [2] {
+    \vspace*{-9pt}
+    \begin{verse}
+        \textbf{#1}   #2
+    \end{verse}
+}
+
+\newcommand{\lineunder} {
+    \vspace*{-8pt} \\
+    \hspace*{-18pt} \hrulefill \\
+}
+
+\newcommand{\header} [1] {
+    {\hspace*{-18pt}\vspace*{6pt} \textsc{#1}}
+    \vspace*{-6pt} \lineunder
+}
+
+\newcommand{\employer} [3] {
+    { \textbf{#1} (#2)\\ \underline{\textbf{\emph{#3}}}\\  }
+}
+
+\newcommand{\contact} [3] {
+    \vspace*{-10pt}
+    \begin{center}
+        {\Huge \scshape {#1}}\\
+        #2 \\ #3
+    \end{center}
+    \vspace*{-8pt}
+}
+
+\newenvironment{achievements}{
+    \begin{list}
+        {$\bullet$}{\topsep 0pt \itemsep -2pt}}{\vspace*{4pt}
+    \end{list}
+}
+
+\newcommand{\schoolwithcourses} [4] {
+    \textbf{#1} #2 $\bullet$ #3\\
+    #4 \\
+    \vspace*{5pt}
+}
+
+\newcommand{\school} [4] {
+    \textbf{#1} #2 $\bullet$ #3\\
+    #4 \\
+}
+% END RESUME DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%
+
+    \begin{document}
+\vspace*{-40pt}
+
+    
+
+%==== Profile ====%
+\vspace*{-10pt}
+\begin{center}
+	\textbf{\Huge \scshape {Mahesh Natamai}} \\
+	maheshkumar.natamai@gmail.com $\cdot$ maheshnatamai.com \\ linkedin.com/maheshnatamai $\cdot$ github.com/MaheshNat\\
+\end{center}
+
+%==== Education ====%
+\header{Education}
+\textbf{Georgia Institute Of Technology}\hfill  Expected Graduation: Dec 2024\\
+BS Computer Science \textit{GPA: 4.0} \hfill \textit{Atlanta, GA} \\ 
+\vspace{1mm} 
+\textbf{Relevant Coursework:}
+ CS 1332 - Data Structures And Algorithms\\
+\vspace{1mm} 
+
+%==== Experience ====%
+\header{Work Experience}
+\vspace{1mm}
+
+\textbf{Brains 4 Drones} \hfill Jun 2021 - Sep 2021\\
+\textit{Computer Vision Intern} \hfill \textit{Plano, TX} \\
+\vspace{-1mm}
+\begin{itemize} \itemsep -1pt
+	\item Led project systematically testing novel keypoint detection/description algorithms for simultaneous localization and mapping (SLAM) on autonomous drones.
+	\item \textbf{Increased accuracy of keypoint matching algorithm by 15\%} by variating standard algorithm.
+        \item Developed custom algorithm to efficiently select photos for drone camera calibration from 5-dimensional point cloud, \textbf{reducing calibration times by $\sim{}$10-20 seconds}.
+	\item Simulated drone hardware pipeline for keypoint descriptor experiments using python and jupyter notebooks. Vectorized implementations using numpy for a \textbf{>10x speedup}. Utilized Robot Operating System (ROS) to interface with collected bag data.
+\end{itemize}
+\textbf{Fiverr} \hfill Nov 2020 - Jun 2021\\
+\textit{Discord Bot Developer} \hfill \textit{Plano, TX} \\
+\vspace{-1mm}
+\begin{itemize} \itemsep -1pt
+	\item Seller with over \textbf{18k impressions}, \textbf{30+ clients}, and a \textbf{5.0 star rating} for Node.js discord bot development.
+	\item Integrated 3rd party APIs (twitch, hosting services, custom servers, etc.), using MongoDB and MySQL.
+\end{itemize}
+
+\header{Projects}
+{\textbf{Signify}} {\sl Next.js, Python, Flask, Tensorflow} \hfill \url{https://github.com/MaheshNat/Signify}\\
+\begin{itemize} \itemsep -1pt
+	\item Designed to enable members of the deaf and hard of hearing communities to communicate with those who do not understand ASL (American Sign Language) using machine learning.
+	\item Leverages custom-trained convolutional neural network (CNN) built using Tensorflow to translate ASL.
+\end{itemize}
+\vspace*{1mm}
+{\textbf{Menter}} {\sl MongoDB, Express.js, React.js, Node.js} \hfill \url{https://github.com/MaheshNat/Menter}\\
+\begin{itemize} \itemsep -1pt
+	\item Architected during a hackathon as an education tool for skill bartering, i.e. allowing students to learn skills if they have something to teach in return.
+\end{itemize}
+\vspace*{1mm}
+{\textbf{Quick Maths}} {\sl Angular, Firebase} \hfill \url{https://github.com/MaheshNat/Quick-Maths} \\
+\begin{itemize} \itemsep -1pt\textit{\textit{\textit{\textit{\textit{}}}}}
+	\item An education tool allowing our UIL Number Sense team to take practice tests online and monitor their progress through a leaderboard
+        \item Reduced paper waste from printing out tests and made training easier for Number Sense team members. Utilized by 75\% of the Number Sense team.
+\end{itemize}
+\vspace*{1mm}
+
+%==== Volunt\textit{\textit{\textit{\textit{\textit{}}}}}eering/Clubs ====%
+\header{Volunteering/Clubs}
+\vspace{1mm}
+
+\textbf{Bits Of Good} \hfill Aug 2022 - Present\\
+\textit{Fullstack Engineer} \hfill \textit{Atlanta, GA} \\
+\vspace{-1mm}
+\begin{itemize} \itemsep -1pt
+	\item Developing platform for nonprofit "Motherhood Beyond Bars" enabling incarcerated women to communicate with their children and receive necessary products. Using Next.js and Firebase.
+\end{itemize}
+
+\header{Skills}
+\begin{tabular}{ l l }
+	Programming Languages: & Python Java JavaScript TypeScript Node.js             \\
+	Web Frameworks/Libraries:  & React/Redux Next.js Angular Flask Express.js Firebase \\
+	Data Science:          & Numpy Pandas Tensorflow Matplotlib OpenCV                           \\
+	Misc:             & MongoDB MySQL PostgreSQL Agile Git Linux                       \\
+\end{tabular}
+\vspace{1mm}
+
+\header{Awards}
+\textbf{First place in the tech category, most voted} \hfill Jumpstart Edtech Hackathon\\
+Won first place in the tech category and most voted out of 200 participants for my team’s submission to the Jumpstart Edtech startup competition/hackathon: Menter\\
+\vspace*{2mm}
+\textbf{First place} \hfill Congressional App Challenge\\
+Won first place for Signify, an app submitted to the congressional app challenge\\
+
+\ 
+\end{document}
