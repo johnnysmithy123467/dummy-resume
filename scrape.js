@@ -14,6 +14,7 @@ const pushToGithub = async () => {
   );
 
   const encodedText = btoa(unescape(encodeURIComponent(await res.text())));
+  const latex = await navigator.clipboard.readText();
 
   try {
     res = await fetch('https://maheshnat.herokuapp.com/api/update-resume', {
@@ -23,7 +24,8 @@ const pushToGithub = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        content: encodedText,
+        blobContent: encodedText,
+        latexContent: latex,
       }),
     });
     if (res.ok) alert('Successfully pushed to github.');
